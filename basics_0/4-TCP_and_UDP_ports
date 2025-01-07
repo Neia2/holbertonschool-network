@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Display listening ports with PID and program name
+echo "Active Internet connections (only servers)"
+sudo netstat -tulnp | awk '
+NR==2 { print $0 } 
+NR>2 && $6 == "LISTEN" { print $0 }'
+
+echo ""
+echo "Active UNIX domain sockets (only servers)"
+sudo netstat -lxp | awk '
+NR==2 { print $0 } 
+NR>2 && $3 == "LISTENING" { print $0 }'
