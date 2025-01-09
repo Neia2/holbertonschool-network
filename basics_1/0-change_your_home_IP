@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Backup /etc/hosts before making changes
+sudo cp /etc/hosts /etc/hosts.backup
+
 # Update localhost and facebook.com IP resolutions
 sudo sed -i '/localhost/d' /etc/hosts
 sudo sed -i '/facebook.com/d' /etc/hosts
