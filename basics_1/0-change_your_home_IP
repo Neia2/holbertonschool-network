@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
-# Backup /etc/hosts before making changes
-sudo cp /etc/hosts /etc/hosts.backup
-
-# Update localhost and facebook.com IP resolutions
-sudo sed -i '/localhost/d' /etc/hosts
-sudo sed -i '/facebook.com/d' /etc/hosts
-echo "127.0.0.2 localhost" | sudo tee -a /etc/hosts > /dev/null
-echo "8.8.8.8 facebook.com" | sudo tee -a /etc/hosts > /dev/null
+# Save the existing /etc/hosts file
+cp /etc/hosts /etc/hosts.bak
+# Create a new /etc/hosts_new file with the changes
+{
+  sed "s/127.0.0.1/127.0.0.2/g" /etc/hosts
+  echo "8.8.8.8       facebook.com"
+} > /etc/hosts_new
+# Replace the old /etc/hosts file with the new one
+cat /etc/hosts_new > /etc/hosts
+# Delete temporary file
+rm /etc/hosts_new
